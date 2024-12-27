@@ -264,22 +264,19 @@ function loadData() {
   }
 
   // Change Theme
-  root.className = theme;
-  if (theme === "light") {
-    themeButton.innerHTML = `<i class="fas fa-sun"></i>
-    `;
-  } else {
-    themeButton.innerHTML = `<i class="fas fa-moon"></i>`;
+  if (getItemFromLocalStorage("theme")) {
+    theme = getItemFromLocalStorage("theme");
   }
-  submitBtn = document.querySelector(".submit");
-  modalBtn = document.querySelectorAll(".modal-btn");
-  modalBtn.forEach((btn) => {
-    btn.addEventListener("click", modalHandler);
-  });
+  root.className = theme;
+  themeIcon();
 
   // Product Count
   productsData.forEach((productData) => {
     productData.innerHTML = data.products.length;
+  });
+  modalBtn = document.querySelectorAll(".modal-btn");
+  modalBtn.forEach((btn) => {
+    btn.addEventListener("click", modalHandler);
   });
 }
 // Show Last Users
@@ -422,8 +419,8 @@ function createData(data) {
   modalBtn = document.querySelectorAll(".modal-btn");
   modalBtn.forEach((btn) => {
     btn.addEventListener("click", modalHandler);
-   
-      createPagination(data);
+
+    createPagination(data);
   });
 }
 
@@ -555,27 +552,25 @@ function createProduct() {
 }
 
 //  Create Pagination
-function createPagination(arryaName) {
+function createPagination(data) {
+  paginationContainer.innerHTML = "";
 
-    paginationContainer.innerHTML = "";
-
-    const pagination = arryaName.length / pageCount;
-    for (let i = 0; i < pagination; i++) {
-      paginationContainer.insertAdjacentHTML(
-        "beforeend",
-        `
+  const pagination = data.length / pageCount;
+  for (let i = 0; i < pagination; i++) {
+    paginationContainer.insertAdjacentHTML(
+      "beforeend",
+      `
         <span data-tabindex="${i + 1}" class="page ${
-          i === page - 1 ? "active" : ""
-        }"">${i + 1}</span>
+        i === page - 1 ? "active" : ""
+      }"">${i + 1}</span>
         `
-      );
-    }
+    );
+  }
 
-    const paginationBtn = document.querySelectorAll(".page");
-    paginationBtn.forEach((btn) => {
-      btn.addEventListener("click", nextPage);
-    });
-    console.log(paginationBtn);
+  const paginationBtn = document.querySelectorAll(".page");
+  paginationBtn.forEach((btn) => {
+    btn.addEventListener("click", nextPage);
+  });
 }
 
 //
@@ -622,22 +617,26 @@ function messageHnadler(status, message) {
 }
 
 function changeTheme() {
-  if (getItemFromLocalStorage("theme")) {
-    if (theme === "light") {
-      theme = "dark";
-      saveToLocalStorage("theme", theme);
-      themeButton.innerHTML = `<i class="fas fa-moon"></i>`;
-    } else {
-      theme = "light";
-      saveToLocalStorage("theme", theme);
-      themeButton.innerHTML = `<i class="fas fa-sun"></i>
-`;
-    }
+  if (theme === "light") {
+    theme = "dark";
+    saveToLocalStorage("theme", theme);
   } else {
     theme = "light";
+    saveToLocalStorage("theme", theme);
   }
+
+  themeIcon();
   root.className = "theme";
   loadData();
+}
+
+function themeIcon() {
+  if (theme === "light") {
+    themeButton.innerHTML = `<i class="fas fa-sun"></i>
+    `;
+  } else {
+    themeButton.innerHTML = `<i class="fas fa-moon"></i>`;
+  }
 }
 
 function lastProducts() {

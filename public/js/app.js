@@ -615,23 +615,21 @@ function messageHnadler(status, message) {
 }
 
 function changeTheme() {
-  console.log(root);
   if (getItemFromLocalStorage("theme")) {
     if (theme === "light") {
       theme = "dark";
       saveToLocalStorage("theme", theme);
-      root.className = getItemFromLocalStorage("theme");
       themeButton.innerHTML = `<i class="fas fa-moon"></i>`;
     } else {
       theme = "light";
       saveToLocalStorage("theme", theme);
-      root.className = getItemFromLocalStorage("theme");
       themeButton.innerHTML = `<i class="fas fa-sun"></i>
 `;
     }
   } else {
     theme = "light";
   }
+  root.className = "theme"
   loadData();
 }
 

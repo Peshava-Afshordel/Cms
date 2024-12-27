@@ -264,7 +264,6 @@ function loadData() {
   }
 
   // Change Theme
-  theme = getItemFromLocalStorage("theme");
   root.className = theme;
   if (theme === "light") {
     themeButton.innerHTML = `<i class="fas fa-sun"></i>
@@ -420,7 +419,7 @@ function createData(data) {
     });
   }
   createPagination(data);
-  loadData()
+  loadData();
   submitBtn = document.querySelector(".submit");
   modalBtn = document.querySelectorAll(".modal-btn");
   modalBtn.forEach((btn) => {

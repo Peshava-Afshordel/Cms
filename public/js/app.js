@@ -240,7 +240,11 @@ let closeModalX,
 
 // Load Data In Onload Document
 function loadData() {
-  if (document.title === "داشبورد ادمین") {
+  if (
+    document.title === "داشبورد ادمین" &&
+    getItemFromLocalStorage("users") &&
+    getItemFromLocalStorage("products")
+  ) {
     data.users = getItemFromLocalStorage("users");
     data.products = getItemFromLocalStorage("products");
     lastUsers();

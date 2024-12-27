@@ -420,6 +420,12 @@ function createData(data) {
     });
   }
   createPagination(data);
+  loadData()
+  submitBtn = document.querySelector(".submit");
+  modalBtn = document.querySelectorAll(".modal-btn");
+  modalBtn.forEach((btn) => {
+    btn.addEventListener("click", modalHandler);
+  });
 }
 
 // Remove Data
@@ -629,7 +635,7 @@ function changeTheme() {
   } else {
     theme = "light";
   }
-  root.className = "theme"
+  root.className = "theme";
   loadData();
 }
 
@@ -661,6 +667,11 @@ function lastProducts() {
           </div>
       `
     );
+  });
+  submitBtn = document.querySelector(".submit");
+  modalBtn = document.querySelectorAll(".modal-btn");
+  modalBtn.forEach((btn) => {
+    btn.addEventListener("click", modalHandler);
   });
 }
 

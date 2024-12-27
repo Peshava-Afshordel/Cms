@@ -418,12 +418,12 @@ function createData(data) {
       );
     });
   }
-  createPagination(data);
-  loadData();
   submitBtn = document.querySelector(".submit");
   modalBtn = document.querySelectorAll(".modal-btn");
   modalBtn.forEach((btn) => {
     btn.addEventListener("click", modalHandler);
+   
+      createPagination(data);
   });
 }
 
@@ -556,24 +556,26 @@ function createProduct() {
 
 //  Create Pagination
 function createPagination(arryaName) {
-  paginationContainer.innerHTML = "";
 
-  const pagination = arryaName.length / pageCount;
-  for (let i = 0; i < pagination; i++) {
-    paginationContainer.insertAdjacentHTML(
-      "beforeend",
-      `
-      <span data-tabindex="${i + 1}" class="page ${
-        i === page - 1 ? "active" : ""
-      }"">${i + 1}</span>
-      `
-    );
-  }
+    paginationContainer.innerHTML = "";
 
-  const paginationBtn = document.querySelectorAll(".page");
-  paginationBtn.forEach((btn) => {
-    btn.addEventListener("click", nextPage);
-  });
+    const pagination = arryaName.length / pageCount;
+    for (let i = 0; i < pagination; i++) {
+      paginationContainer.insertAdjacentHTML(
+        "beforeend",
+        `
+        <span data-tabindex="${i + 1}" class="page ${
+          i === page - 1 ? "active" : ""
+        }"">${i + 1}</span>
+        `
+      );
+    }
+
+    const paginationBtn = document.querySelectorAll(".page");
+    paginationBtn.forEach((btn) => {
+      btn.addEventListener("click", nextPage);
+    });
+    console.log(paginationBtn);
 }
 
 //

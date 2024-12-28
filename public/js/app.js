@@ -512,18 +512,26 @@ function createUser() {
     messageHnadler("failed", "اطلاعات وارد شده صحیح نمی باشد");
     closeModal();
   } else {
-    let newUser = {
-      id: data.users.length + 1,
-      name: userFullName.value,
-      username: userUsername.value,
-      email: userEmail.value,
-      password: userPassword.value,
-    };
-    data.users.push(newUser);
-    messageHnadler("success", "کاربر جدید با موفقیت اضافه شد");
-    saveToLocalStorage("users", data.users);
-    createData(data.users);
-    closeModal();
+    const isInUser = data.users.some((user) => {
+      return user.email === userEmail.value || user.username === userUsername;
+    });
+    if (!isInUser) {
+      let newUser = {
+        id: data.users.length + 1,
+        name: userFullName.value,
+        username: userUsername.value,
+        email: userEmail.value,
+        password: userPassword.value,
+      };
+      data.users.push(newUser);
+      messageHnadler("success", "کاربر جدید با موفقیت اضافه شد");
+      saveToLocalStorage("users", data.users);
+      createData(data.users);
+      closeModal();
+    } else {
+      messageHnadler("failed", "اطلاعات وارد شده برای کاربر دیگری ثبت شده است");
+      closeModal();
+    }
   }
 }
 
@@ -537,17 +545,25 @@ function createProduct() {
     messageHnadler("failed", "اطلاعات وارد شده صحیح نمی باشد");
     closeModal();
   } else {
-    let newProduct = {
-      id: data.products.length + 1,
-      title: productTitle.value,
-      price: +productPrice.value,
-      slug: productShortName.value,
-    };
-    data.products.push(newProduct);
-    messageHnadler("success", "محصول جدید با موفقیت اضافه شد");
-    saveToLocalStorage("products", data.products);
-    createData(data.products);
-    closeModal();
+    const isInProduct = data.products.some((product) => {
+      return product.slug === productShortName.value;
+    });
+    if (!isInProduct) {
+      let newProduct = {
+        id: data.products.length + 1,
+        title: productTitle.value,
+        price: +productPrice.value,
+        slug: productShortName.value,
+      };
+      data.products.push(newProduct);
+      messageHnadler("success", "محصول جدید با موفقیت اضافه شد");
+      saveToLocalStorage("products", data.products);
+      createData(data.products);
+      closeModal();
+    } else {
+      messageHnadler("failed", "این عنوان کوتاه قبلا ثبت شده است");
+      closeModal();
+    }
   }
 }
 

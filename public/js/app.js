@@ -387,11 +387,11 @@ const createData = (data) => {
                   <div class="product-manage">
                     <button class="modal-btn edit-btn" data-modal="edit-user" data-id ="${data.id}">
                       <!-- Edit icon -->
-                      <i class="fas fa-edit"></i>
+                      <i class="fas fa-edit" data-modal="edit-user" data-id ="${data.id}"></i>
                     </button>
                     <button class="remove-btn modal-btn" data-modal="remove-user"  data-id ="${data.id}">
                       <!-- Ban icon -->
-                      <i class="fas fa-ban"></i>
+                      <i class="fas fa-ban" data-modal="remove-user" data-id ="${data.id}"></i>
                     </button>
                   </div>
                 </div>
@@ -412,13 +412,17 @@ const createData = (data) => {
                       data.id
                     }">
                     <!-- Edit icon -->
-                    <i class="fas fa-edit"></i>
+                    <i class="fas fa-edit" data-modal="edit-product" data-id ="${
+                      data.id
+                    }"></i>
                   </button>
                 <button class="remove-btn modal-btn" data-modal="remove-product"  data-id ="${
                   data.id
                 }">
                     <!-- Delete fas icon -->
-                    <i class="fas fa-trash-alt"></i>
+                    <i class="fas fa-trash-alt" data-modal="remove-product" data-id ="${
+                      data.id
+                    }"></i>
                   </button>
                 </div>
               </div>
@@ -430,9 +434,8 @@ const createData = (data) => {
   modalBtn = document.querySelectorAll(".modal-btn");
   modalBtn.forEach((btn) => {
     btn.addEventListener("click", modalHandler);
-
-    createPagination(data);
   });
+  createPagination(data);
 };
 
 // Remove Data

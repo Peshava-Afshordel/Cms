@@ -238,11 +238,7 @@ let closeModalX,
 
 // Load Data In Onload Document
 const loadData = () => {
-  if (
-    document.title === "داشبورد ادمین" &&
-    getItemFromLocalStorage("users") &&
-    getItemFromLocalStorage("products")
-  ) {
+  if (document.title === "داشبورد ادمین") {
     data.users = getItemFromLocalStorage("users");
     data.products = getItemFromLocalStorage("products");
     lastUsers();
@@ -636,7 +632,7 @@ const saveToLocalStorage = (name, data) => {
 
 // Get Data In Local Storage
 const getItemFromLocalStorage = (dataName) => {
-  return JSON.parse(localStorage.getItem(dataName));
+  return JSON.parse(localStorage.getItem(dataName)) || "";
 };
 
 const toastProgressBar = () => {

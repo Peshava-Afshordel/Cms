@@ -1,6 +1,7 @@
 *,
 ::before,
 ::after {
+  user-select: none;
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
@@ -1353,6 +1354,7 @@ aside {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
+  z-index: 100;
 }
 
 .toast.success {

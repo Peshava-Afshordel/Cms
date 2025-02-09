@@ -244,15 +244,12 @@ const loadData = () => {
     lastUsers();
     lastProducts();
   }
-  if (document.title === "مدیریت کاربران" && getItemFromLocalStorage("users")) {
+  if (document.title === "مدیریت کاربران") {
     data.users = getItemFromLocalStorage("users");
     createData(data.users);
     usersData.innerText = data.users.length;
   }
-  if (
-    document.title === "مدیریت محصولات" &&
-    getItemFromLocalStorage("products")
-  ) {
+  if (document.title === "مدیریت محصولات") {
     data.products = getItemFromLocalStorage("products");
     createData(data.products);
   }
@@ -260,9 +257,9 @@ const loadData = () => {
   // Change Theme
   if (getItemFromLocalStorage("theme")) {
     theme = getItemFromLocalStorage("theme");
+    root.className = theme;
+    themeIcon();
   }
-  root.className = theme;
-  themeIcon();
 
   // Product Count
   productsData.forEach((productData) => {
@@ -300,8 +297,6 @@ const lastUsers = () => {
     );
   });
 };
-
-// Show Last Products
 
 // Show Modal
 const modalHandler = (e) => {
@@ -374,62 +369,65 @@ const createData = (data) => {
   const lastIndex = startIndex + pageCount;
   const mainData = data.slice(startIndex, lastIndex);
   containerData.innerHTML = "";
-  if (document.title === "مدیریت کاربران") {
-    mainData.forEach((data) => {
-      containerData.insertAdjacentHTML(
-        "beforeend",
-        `
-            <div class="tableRow">
-                  <p class="user-fullName">${data.name}</p>
-                  <p class="user-username">${data.username}</p>
-                  <p class="user-email">${data.email}</p>
-                  <p class="user-password">${data.password}</p>
+  if (mainData) {
+    if (document.title === "مدیریت کاربران") {
+      mainData.forEach((data) => {
+        containerData.insertAdjacentHTML(
+          "beforeend",
+          `
+              <div class="tableRow">
+                    <p class="user-fullName">${data.name}</p>
+                    <p class="user-username">${data.username}</p>
+                    <p class="user-email">${data.email}</p>
+                    <p class="user-password">${data.password}</p>
+                    <div class="product-manage">
+                      <button class="modal-btn edit-btn" data-modal="edit-user" data-id ="${data.id}">
+                        <!-- Edit icon -->
+                        <i class="fas fa-edit" data-modal="edit-user" data-id ="${data.id}"></i>
+                      </button>
+                      <button class="remove-btn modal-btn" data-modal="remove-user"  data-id ="${data.id}">
+                        <!-- Ban icon -->
+                        <i class="fas fa-ban" data-modal="remove-user" data-id ="${data.id}"></i>
+                      </button>
+                    </div>
+                  </div>
+            `
+        );
+      });
+    } else {
+      mainData.forEach((data) => {
+        containerData.insertAdjacentHTML(
+          "beforeend",
+          `
+                 <div class="tableRow">
+                  <p class="product-title">${data.title}</p>
+                  <p class="product-price">${data.price.toLocaleString()} تومان</p>
+                  <p class="product-shortName">${data.slug}</p>
                   <div class="product-manage">
-                    <button class="modal-btn edit-btn" data-modal="edit-user" data-id ="${data.id}">
+                      <button class="modal-btn edit-btn" data-modal="edit-product" data-id ="${
+                        data.id
+                      }">
                       <!-- Edit icon -->
-                      <i class="fas fa-edit" data-modal="edit-user" data-id ="${data.id}"></i>
+                      <i class="fas fa-edit" data-modal="edit-product" data-id ="${
+                        data.id
+                      }"></i>
                     </button>
-                    <button class="remove-btn modal-btn" data-modal="remove-user"  data-id ="${data.id}">
-                      <!-- Ban icon -->
-                      <i class="fas fa-ban" data-modal="remove-user" data-id ="${data.id}"></i>
+                  <button class="remove-btn modal-btn" data-modal="remove-product"  data-id ="${
+                    data.id
+                  }">
+                      <!-- Delete fas icon -->
+                      <i class="fas fa-trash-alt" data-modal="remove-product" data-id ="${
+                        data.id
+                      }"></i>
                     </button>
                   </div>
                 </div>
-          `
-      );
-    });
-  } else {
-    mainData.forEach((data) => {
-      containerData.insertAdjacentHTML(
-        "beforeend",
-        `
-               <div class="tableRow">
-                <p class="product-title">${data.title}</p>
-                <p class="product-price">${data.price.toLocaleString()} تومان</p>
-                <p class="product-shortName">${data.slug}</p>
-                <div class="product-manage">
-                    <button class="modal-btn edit-btn" data-modal="edit-product" data-id ="${
-                      data.id
-                    }">
-                    <!-- Edit icon -->
-                    <i class="fas fa-edit" data-modal="edit-product" data-id ="${
-                      data.id
-                    }"></i>
-                  </button>
-                <button class="remove-btn modal-btn" data-modal="remove-product"  data-id ="${
-                  data.id
-                }">
-                    <!-- Delete fas icon -->
-                    <i class="fas fa-trash-alt" data-modal="remove-product" data-id ="${
-                      data.id
-                    }"></i>
-                  </button>
-                </div>
-              </div>
-          `
-      );
-    });
+            `
+        );
+      });
+    }
   }
+
   submitBtn = document.querySelector(".submit");
   modalBtn = document.querySelectorAll(".modal-btn");
   modalBtn.forEach((btn) => {
@@ -635,7 +633,7 @@ const saveToLocalStorage = (name, data) => {
 
 // Get Data In Local Storage
 const getItemFromLocalStorage = (dataName) => {
-  return JSON.parse(localStorage.getItem(dataName)) || "";
+  return JSON.parse(localStorage.getItem(dataName)) || [];
 };
 
 const toastProgressBar = () => {
@@ -684,7 +682,7 @@ const themeIcon = () => {
     themeButton.innerHTML = `<i class="fas fa-moon"></i>`;
   }
 };
-
+// Show Last Products
 const lastProducts = () => {
   containerData.innerHTML = "";
   let lastProductsArray = data.products.slice(-5);

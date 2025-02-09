@@ -699,13 +699,17 @@ const lastProducts = () => {
                     data.id
                   }">
                   <!-- Edit icon -->
-                  <i class="fas fa-edit"></i>
+                  <i class="fas fa-edit" data-modal="edit-product" data-id ="${
+                    data.id
+                  }"></i>
                 </button>
               <button class="remove-btn modal-btn" data-modal="remove-product"  data-id ="${
                 data.id
               }">
                   <!-- Delete fas icon -->
-                  <i class="fas fa-trash-alt"></i>
+                  <i class="fas fa-trash-alt" data-modal="remove-product"  data-id ="${
+                data.id
+              }"></i>
                 </button>
               </div>
             </div>
